@@ -1,0 +1,51 @@
+﻿<Window x:Class="POD_Bitmap.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POD_Bitmap"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="475.2" Width="653.8">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="164*"/>
+            <RowDefinition Height="281*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl HorizontalAlignment="Left" Height="436" VerticalAlignment="Top" Width="637" Grid.RowSpan="2" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Program" Height="22" Margin="-2,-2,-2.4,0" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <Button Content="Wczytaj plik bmp" HorizontalAlignment="Left" VerticalAlignment="Top" Width="138" Margin="10,10,0,0" Height="34" Click="Button_Click"/>
+                    <Button Content="Wczytaj plik do ukrycia" HorizontalAlignment="Left" VerticalAlignment="Top" Width="139" Margin="172,10,0,0" Height="34" Click="Button_Click_1"/>
+                    <Button Content="Znajdź ukryty plik" HorizontalAlignment="Left" Margin="172,106,0,0" VerticalAlignment="Top" Width="139" Height="29" Click="Button_Click_2"/>
+                    <TextBox x:Name="FindFileTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="139" Margin="172,162,0,0"/>
+                    <Image x:Name ="InputImage" HorizontalAlignment="Left" Height="207" VerticalAlignment="Top" Width="311" Margin="10,190,0,0"/>
+                    <RadioButton x:Name="FileRadioButton" Content="Plik" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="172,75,0,0" Width="67"/>
+                    <RadioButton x:Name="ConsoleRadioButton" Content="Konsola" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,75,0,0" Width="67"/>
+                    <TextBox x:Name="InputConsole" HorizontalAlignment="Left" Height="175" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" Margin="335,10,0,0"/>
+                    <TextBox x:Name="OutputConsole" HorizontalAlignment="Left" Height="206" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" Margin="335,190,0,0"/>
+                    <Label x:Name="LoadBMPLabel" Content="Nie wczytano pliku" HorizontalAlignment="Left" VerticalAlignment="Top" Height="29" Width="138" Margin="10,44,0,0"/>
+                    <Label x:Name="LoadHfileLabel" Content="Nie wczytano pliku" HorizontalAlignment="Left" Margin="172,44,0,0" VerticalAlignment="Top" Width="139" Height="26"/>
+                    <Button Content="Generuj" HorizontalAlignment="Left" VerticalAlignment="Top" Width="138" Margin="10,73,0,0" Height="29" Click="Button_Click_3"/>
+                    <CheckBox x:Name="CheckBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,162,0,0" Width="138" Checked="CheckBox_Checked" Unchecked="CheckBoxChanged" Content="Dwa ostatnie bity"/>
+                    <Label Content="Liczba bajtów" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="172,135,0,0" Width="139" Height="27"/>
+                    <ComboBox x:Name="ComboBox" Margin="0,112,481.2,270.6" SelectionChanged="ComboBox_SelectionChanged" HorizontalAlignment="Right" Width="140">
+                        <ComboBoxItem Content="Kolumnowo" HorizontalAlignment="Left" Width="139" Selected="ComboBoxItem_Selected"/>
+                        <ComboBoxItem Content="Wierszowo" HorizontalAlignment="Left" Width="139.2" Selected="ComboBoxItem_Selected"/>
+                    </ComboBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Instrukcja">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox HorizontalAlignment="Left" Height="396" TextWrapping="Wrap" VerticalAlignment="Top" Width="621" Margin="10,10,0,-0.4" IsReadOnly="True" Text="Autor: Kamil Sagalara&#xA;Nazwa algorytmu: Algorytm najmniej znaczącego bitu&#xA;Opis algorytmu:&#xA;Algorytm ten polega na zmianie najmniej znaczącego bitu każdegi piksela na bity odpowiadające wiadomości, którą chcemy przechować. Program działa dla obrazów kolorowych, więc każdy piksel składa się z 3 kanałów czyli 3 bajtów. Dzięki temu na jednym pikselu można przechować 3 bity wiadomości (zakładając, że używamy tylko ostatniego bitu). Program ma także możliwość zapisu na dwóch ostatnich bitach, można wtedy zmieścić większy plik. Większa liczba bitów wiąże się z ryzykiem wyraźnej modyfikacji obrazu - a w algorytmie chodzi o to żeby użytkownik nie mógł odróżnić tego obrazu od oryginału. Istnieje możliwość zapisywania kolejnych bitów wzdłuż kolumn lub wierszy obrazu. &#xA;&#xA;Ukrywanie wiadomości:&#xA;1. Program ukrywa dowolną wiadomość w plikach o rozszerzeniu .bmp (tylko w kolorze).&#xA;2. Aby rozpocząc należy wczytać obraz bmp oraz wybrać sposób wprowadzania wiadomości - plik lub konsola.&#xA;3. W przypadku wybrania pliku należy go wczytać naciskając &quot;Wczytaj plik do ukrycia&quot;, w przeciwnym wypadku należy wprowadzić wiadomość do konsoli.&#xA;4. Po przygotowaniu należy wybrać sposób zapisu bitów- wzdłuż wierszy lub kolumn.&#xA;5. Opcjonalnie można wybrać tryb ukrywania na dwóch bitach w każdym kanale. Algorytm działa w taki sposób, że najpierw wykorzystuje wszystkie ostatnie bity, a dopiero gdy ich zabraknie, zaczyna zapis na bitach przedostatnich.&#xA;6. Po przygotowaniu wszystkiego można nacisnąć przycisk &quot;Generuj&quot;.&#xA;&#xA;Odczytywanie wiadomości:&#xA;1. Należy wybrać sposób odczytu - zapis do pliku lub wypisanie do konsoli.&#xA;2. W każdym przypadku należy wpisać liczbę bajtów, które chcemy odczytać.&#xA;3. W przypadku gdy mamy do czynienia z plikiem tekstowym, to wystarczy aby długość była większa lub równa wiadomości. W przypadku plików w innym formacie przed odczytem trzeba znać i wpisać dokładny rozmiar oczekiwanego pliku.&#xA;4. Po przygotowaniu należy nacisnąć przysik &quot;Znajdź ukryty plik&quot;." TextChanged="TextBox_TextChanged"/>
+                </Grid>
+            </TabItem>
+            <TextBlock Height="100" TextWrapping="Wrap" Text="TextBlock" Width="100"/>
+        </TabControl>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="130.8,93,-137.8,0" Grid.RowSpan="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
